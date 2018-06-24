@@ -6,4 +6,5 @@ mod tests {
     }
 }
 
-mod board;
+pub mod board;
+

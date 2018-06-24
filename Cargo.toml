@@ -3,4 +3,7 @@ name = "connect_four"
 version = "0.1.0"
 authors = ["lejtman"]
 
+[[bin]]
+name = "main"
+
 [dependencies]
