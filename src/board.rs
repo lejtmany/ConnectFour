@@ -1,7 +1,8 @@
+const BOARD_HEIGHT:usize = 6;
+const BOARD_WIDTH:usize = 7;
+
 pub struct Board {
-    board:[[Square;6];7],
-    boardHeight:u32,
-    boardWidth:u32
+    board:[[Square;BOARD_WIDTH];BOARD_HEIGHT],
 }
 
 #[derive(Copy, Clone)]
@@ -16,18 +17,18 @@ enum Team{
 
 impl Board {
     pub fn new()->Board{
-        Board{board:[[Square{team:None};6];7], boardHeight:8, boardWidth:9}
+        Board{board:[[Square{team:None};BOARD_WIDTH];BOARD_HEIGHT]}
     }
 
     pub fn print_board(&self){
         for row in self.board.iter(){
             for square in row.iter(){
-                let teamStr = match square.team {
+                let team_str = match square.team {
                     Some(Team::TEAM1) => '1',
                     Some(Team::TEAM2) => '2',
                     None => '0',
                 };
-                print!("{}",teamStr);
+                print!("{}",team_str);
             }
             println!("")
         }
