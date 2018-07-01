@@ -21,9 +21,16 @@ impl Board {
     }
 
     pub fn print_board(&self){
+
+        for column_num in 1..self.board[0].len() + 1 {
+            print!("{}",column_num )
+        }
+        println!();
+        println!();
+
         for row in self.board.iter(){
-            for square in row.iter(){
-                let team_str = match square.team {
+            for column in row.iter(){
+                let team_str = match column.team {
                     Some(Team::TEAM1) => '1',
                     Some(Team::TEAM2) => '2',
                     None => '0',
