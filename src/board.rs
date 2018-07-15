@@ -36,9 +36,12 @@ impl Board {
         }
     }
 
-    pub fn insert_at_column(&mut self, column_num:usize, team:Team){
+    pub fn insert_at_column(&mut self, column_num:usize, team:Team)->Result<(),&str>{
         if column_num > BOARD_WIDTH {
-            panic!("column number is outside of range. must be between 0 and {} but was {}", BOARD_WIDTH, column_num);
+            return Err(&format!("column number is outside of range. must be between 0 and {} but was {}", BOARD_WIDTH, column_num)[..]);
+        }
+        if self.board[0][column_num].is_some() {
+            return Err(format!("column number {} is full", column_num));
         }
         for row_num in 0..BOARD_HEIGHT + 1{
             if row_num >= BOARD_HEIGHT || self.board[row_num][column_num].is_some(){
@@ -46,5 +49,6 @@ impl Board {
                 break;
             }
         }
+        Ok(())
     }
 }
