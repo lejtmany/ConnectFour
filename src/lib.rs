@@ -7,4 +7,4 @@ mod tests {
 }
 
 pub mod board;
-
+pub mod game;
