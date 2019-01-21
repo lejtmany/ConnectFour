@@ -22,7 +22,6 @@ impl Board {
             print!("{}",column_num )
         }
         println!();
-        println!();
 
         for row in self.board.iter(){
             for column in row.iter(){
@@ -33,8 +32,9 @@ impl Board {
                 };
                 print!("{}",team_str);
             }
-            println!("")
+            println!();
         }
+        println!();
     }
 
     pub fn insert_at_column(&mut self, column_num:usize, team:Team)->Result<(usize,usize),String>{
