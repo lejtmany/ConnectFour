@@ -8,9 +8,15 @@ pub struct Game {
 }
 
 impl Game {
+    pub fn new()->Game{
+        Game{is_over:false, curr_team:Team::TEAM1, board:Board::new()}
+    }
+
     pub fn make_move(&mut self, column_num:usize)->Result<(), String>{
         self.toggle_team();
         self.board.insert_at_column(column_num, self.curr_team)?;
+        self.is_over = self.board.check_win();
+        dbg!(self.is_over);
         Ok(())
     }
 
@@ -27,9 +33,5 @@ impl Game {
 
     pub fn get_is_over(&self)->bool{
         self.is_over
-    }
-
-    fn check_win(&self){
-        
     }
 }
