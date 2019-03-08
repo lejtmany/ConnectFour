@@ -67,12 +67,14 @@ impl Board {
                 let curr_cell = self.board[row_num][column_num];
                 if curr_cell != None && last_cell == curr_cell{
                     consec_cntr = consec_cntr + 1;
+                    if consec_cntr >= 4 {
+                        return true;
+                    }
                 }
-                // dbg!(consec_cntr);
+                else{
+                    consec_cntr = 1;
+                }
                 last_cell = curr_cell;
-                if consec_cntr >= 4 {
-                    return true;
-                }
             }
         }
         false
@@ -86,12 +88,14 @@ impl Board {
                 let curr_cell = self.board[row_num][column_num];
                 if curr_cell != None  && last_cell == curr_cell{
                     consec_cntr = consec_cntr + 1;
+                    if consec_cntr >= 4 {
+                        return true;
+                    }
                 }
-                // dbg!(consec_cntr);
+                else{
+                    consec_cntr = 1;
+                }
                 last_cell = curr_cell;
-                if consec_cntr >= 4 {
-                    return true;
-                }
             }
         }
         false
