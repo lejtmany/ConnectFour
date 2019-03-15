@@ -6,7 +6,7 @@ pub struct Board {
     board:[[Option<Team>;BOARD_WIDTH];BOARD_HEIGHT],
 }
 
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq,Debug)]
 pub enum Team{
     TEAM1, TEAM2
 }

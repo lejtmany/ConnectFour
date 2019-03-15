@@ -13,10 +13,10 @@ impl Game {
     }
 
     pub fn make_move(&mut self, column_num:usize)->Result<(), String>{
-        self.toggle_team();
         self.board.insert_at_column(column_num, self.curr_team)?;
         self.is_over = self.board.check_win();
         dbg!(self.is_over);
+        self.toggle_team();
         Ok(())
     }
 
@@ -33,5 +33,9 @@ impl Game {
 
     pub fn get_is_over(&self)->bool{
         self.is_over
+    }
+
+    pub fn print_board(&self){
+        self.board.print_board();
     }
 }
