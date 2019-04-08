@@ -44,59 +44,55 @@ impl Board {
         if self.board[0][column_num].is_some() {
             return Err(format!("column number {} is full", column_num))
         }
-        for row_num in 0..BOARD_HEIGHT + 1{
+        for row_num in 0..=BOARD_HEIGHT{
             if row_num >= BOARD_HEIGHT || self.board[row_num][column_num].is_some(){
-                self.board[row_num - 1][column_num] = Some(team);
-                return Ok((column_num, row_num));
+                let row_num_to_fill = row_num - 1;
+                self.board[row_num_to_fill][column_num] = Some(team);
+                return Ok((column_num, row_num_to_fill));
             }
         }
         Err("Shouldn't be here".to_string())
     }
 
-    pub fn check_win(&self)->bool{
-        self.check_horizontal_win() ||
-        self.check_vertical_win() 
-        // check_diagonal_win(&self)
+    pub fn check_win(&self, col_idx:usize, row_idx:usize)->bool{
+        dbg!(col_idx);
+        dbg!(row_idx);
+        self.check_col_for_win(col_idx) ||
+        self.check_row_for_win(row_idx) ||
+        self.check_diagonal_for_win(col_idx, row_idx)
     }
 
-    fn check_horizontal_win(&self)->bool{
-        for row_num in 0..BOARD_HEIGHT{
-            let mut consec_cntr = 1;
-            let mut last_cell = self.board[row_num][0];
-            for column_num in 1..BOARD_WIDTH{
-                let curr_cell = self.board[row_num][column_num];
-                if curr_cell != None && last_cell == curr_cell{
-                    consec_cntr = consec_cntr + 1;
-                    if consec_cntr >= 4 {
-                        return true;
-                    }
-                }
-                else{
-                    consec_cntr = 1;
-                }
-                last_cell = curr_cell;
-            }
+    fn check_row_for_win(&self, row_idx:usize)->bool{
+        self.check_array_for_win(&self.board[row_idx][..])
+    }   
+
+    fn check_col_for_win(&self, col_idx:usize)->bool{
+        let mut row_array : [Option<Team>;BOARD_HEIGHT] = [None;BOARD_HEIGHT];
+        for row_idx in 0..BOARD_HEIGHT{
+            row_array[row_idx] = self.board[row_idx][col_idx];
         }
+        self.check_array_for_win(&row_array[..])
+    }
+
+    fn check_diagonal_for_win(&self, col_idx:usize, row_idx:usize)->bool{
         false
     }
 
-    fn check_vertical_win(&self)->bool{
-        for column_num in 0..BOARD_WIDTH{
-            let mut consec_cntr = 1;
-            let mut last_cell = self.board[0][column_num];
-            for row_num in 1..BOARD_HEIGHT{
-                let curr_cell = self.board[row_num][column_num];
-                if curr_cell != None  && last_cell == curr_cell{
-                    consec_cntr = consec_cntr + 1;
-                    if consec_cntr >= 4 {
-                        return true;
-                    }
+    fn check_array_for_win(&self, board_arr:&[Option<Team>])->bool{
+        let mut consec_ctr = 1;
+        let mut last_cell = board_arr[0];
+        for idx in 1..board_arr.len(){
+            let curr_cell = board_arr[idx];
+            if curr_cell != None && last_cell == curr_cell{
+                consec_ctr = consec_ctr + 1;
+                if consec_ctr >= 4 {
+                    return true;
                 }
-                else{
-                    consec_cntr = 1;
-                }
-                last_cell = curr_cell;
             }
+            else{
+                consec_ctr = 1;
+            }
+            last_cell = curr_cell;
         }
         false
     }
