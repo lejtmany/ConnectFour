@@ -15,7 +15,6 @@ impl Game {
     pub fn make_move(&mut self, column_num:usize)->Result<(), String>{
         let (col_idx, row_idx) = self.board.insert_at_column(column_num, self.curr_team)?;
         self.is_over = self.board.check_win(col_idx, row_idx);
-        dbg!(self.is_over);
         self.toggle_team();
         Ok(())
     }

@@ -55,8 +55,6 @@ impl Board {
     }
 
     pub fn check_win(&self, col_idx:usize, row_idx:usize)->bool{
-        dbg!(col_idx);
-        dbg!(row_idx);
         self.check_col_for_win(col_idx) ||
         self.check_row_for_win(row_idx) ||
         self.check_diagonal_for_win(col_idx, row_idx)
